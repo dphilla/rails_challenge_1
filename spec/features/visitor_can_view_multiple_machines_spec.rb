@@ -9,7 +9,7 @@ feature "visitor views multiple machines" do
     @pop_rocks = Snack.create(name: "Pop Rocks", price: 1.87)
     @flaming_hot_cheetos = Snack.create(name: "Flaming Hot Cheetos", price: 2.53)
   end
-  scenario "visitor sees two machines with same items" do
+  scenario "visitor sees two machines with same options to add items" do
 
     visit machine_snacks_path(@vending_machine_1)
 
@@ -19,5 +19,17 @@ feature "visitor views multiple machines" do
     expect(page).to have_content(@white_castle_burger.name)
     expect(page).to have_content(@pop_rocks.name)
     expect(page).to have_content(@flaming_hot_cheetos.name)
+    expect(page).to have_button("Add This Item to My Machine")
+
+    visit machine_snacks_path(@vending_machine_2)
+
+    expect(page).to have_content(@vending_machine_2.location)
+    expect(page).to have_content("Choose Items for My Machine:")
+
+    expect(page).to have_content(@white_castle_burger.name)
+    expect(page).to have_content(@pop_rocks.name)
+    expect(page).to have_content(@flaming_hot_cheetos.name)
+    expect(page).to have_button("Add This Item to My Machine")
   end
+
 end
